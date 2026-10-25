@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Anna Sokolova</title>
-<meta name="description" content="Anna Sokolova: data analyst. Reference data and data quality, BI, LLM/RAG. Saint Petersburg.">
+<meta name="description" content="Anna Sokolova: business analyst. Process analysis, requirements, data and BI. Saint Petersburg.">
 <meta name="theme-color" content="#EFEFEC">
 <link rel="canonical" href="https://askannasklv.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://askannasklv.github.io/">
 <meta property="og:title" content="Anna Sokolova">
-<meta property="og:description" content="Data analyst: reference data &amp; data quality, BI, LLM/RAG. Saint Petersburg.">
+<meta property="og:description" content="Business analyst: process analysis, requirements, data &amp; BI. Saint Petersburg.">
 <meta property="og:image" content="https://askannasklv.github.io/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -29,7 +29,7 @@ img{max-width:100%}
 <style>
 /* Layout: one continuous sheet of cool paper. Light red type, Alatau ranges that
    dissolve into the page, knitted foothills with clickable apple trees,
-   a кошкар-мүйіз seal between sections, experience as a quiet two-column ledger.
+   a кошкар-мүйіз seal between sections, experience as a quiet two-column ledger, summary up top.
    Single deliberate light look, every colour set explicitly. */
 :root{
   --ink:#121212;
@@ -163,6 +163,16 @@ a.val:hover{color:var(--ink)}
 .final-wrap .mtn{margin-top:clamp(16px,3vw,40px)}
 .foot{padding-top:12px}
 
+
+/* ---------- SUMMARY + CV ---------- */
+.summary{display:grid;gap:14px;max-width:1040px;margin:0 auto;width:100%}
+.lead{margin:0;max-width:62ch;font-size:clamp(18px,1.8vw,23px);line-height:1.5;font-weight:300;color:var(--text)}
+.nav a.cv{color:var(--paper);background:var(--red);border:1px solid var(--red);padding:6px 9px}
+.nav a.cv:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.cvbtn{width:fit-content;font:500 12px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--paper);background:var(--red);text-decoration:none;padding:11px 14px;margin-top:4px}
+.cvbtn:hover{background:var(--ink)}
+.cvbtn:focus-visible,.nav a.cv:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
 @media (max-width:820px){
   .final{grid-template-columns:minmax(0,1fr)}
   .skills li,.job{grid-template-columns:minmax(0,1fr)}
@@ -240,7 +250,7 @@ a.val:hover{color:var(--ink)}
   <section class="frame hero" aria-labelledby="name">
     <div class="meta">
       <span><span class="en">Saint Petersburg</span><span class="ru">Санкт-Петербург</span></span>
-      <span><span class="en">Data analyst / 2026</span><span class="ru">Аналитик данных / 2026</span></span>
+      <span><span class="en">Business analyst / 2026</span><span class="ru">Бизнес-аналитик / 2026</span></span>
       <div class="lang" role="group" aria-label="Language">
         <button type="button" id="btn-en" data-lang="en" aria-pressed="true">EN</button>
         <button type="button" id="btn-ru" data-lang="ru" aria-pressed="false">RU</button>
@@ -249,17 +259,26 @@ a.val:hover{color:var(--ink)}
     <h1 id="name"><span class="en">Anna<br>Sokolova</span><span class="ru">Анна<br>Соколова</span></h1>
     <div class="hero-row">
       <p class="tagline">
-        <span class="en">(Data analyst / Reference data &amp; data quality / BI / LLM/RAG)</span>
-        <span class="ru">(Аналитик данных / Справочники и качество данных / BI / LLM/RAG)</span>
+        <span class="en">(Business analyst / Process analysis / Requirements / Data &amp; BI)</span>
+        <span class="ru">(Бизнес-аналитик / Анализ процессов / Требования / Данные и BI)</span>
       </p>
       <nav class="nav" aria-label="Sections">
         <a href="#skills"><span class="en">Skills</span><span class="ru">Навыки</span></a>
         <a href="#experience"><span class="en">Experience</span><span class="ru">Опыт</span></a>
         <a href="#education"><span class="en">Education</span><span class="ru">Образование</span></a>
         <a href="#contact"><span class="en">Contact</span><span class="ru">Контакты</span></a>
+        <a class="cv en" href="cv/Sokolova_CV_EN.pdf" target="_blank" rel="noopener">CV · PDF ↓</a>
+        <a class="cv ru" href="cv/Sokolova_CV_RU.pdf" target="_blank" rel="noopener">Резюме · PDF ↓</a>
       </nav>
     </div>
     <svg class="mtn" viewBox="0 0 1200 330" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+  </section>
+
+  <!-- ========== SUMMARY ========== -->
+  <section class="frame summary" aria-label="Summary">
+    <p class="kicker"><span class="en">Summary</span><span class="ru">О себе</span></p>
+    <p class="lead en">Business analyst with IT and medtech experience: 6 years across projects, processes and data. I map processes, gather requirements through interviews, write specifications and drive automation to measurable results: application processing cut from 60 to 10 minutes, procurement data from days to hours. I stand by my findings, including those the business would rather not hear.</p>
+    <p class="lead ru">Бизнес-аналитик с опытом в IT и медтехе, 6 лет в проектах, процессах и данных. Описываю процессы, собираю требования на интервью, пишу ТЗ и довожу автоматизацию до измеримого результата: обработка заявок с 60 до 10 минут, данные о закупках — с дней до часов. Защищаю выводы, даже неудобные для бизнеса.</p>
   </section>
 
   <div class="seal" aria-hidden="true"><span></span><svg viewBox="0 0 120 120"><use href="#horn" stroke="#C8101C" stroke-width="3.5"/></svg><span></span></div>
@@ -270,23 +289,19 @@ a.val:hover{color:var(--ink)}
       <h2 class="h2" id="skills-h"><span class="en">Skills</span><span class="ru">Навыки</span></h2>
     </div>
     <ul class="skills en">
-      <li><h3>Data Management</h3><p>Reference data maintenance (matching similarly-named equipment, mapping affiliated vendors, classification by OKPD2 and medical topics); data quality checks (duplicates, missing values); manual data labeling for a classifier; traceable calculation logic</p></li>
-      <li><h3>Data &amp; Analytics</h3><p>Python/pandas, SQL (basic), ETL pipelines, regex, Power Query, 1C; root-cause and anomaly analysis; procurement, sales and finance analytics; cost-per-test models</p></li>
-      <li><h3>BI &amp; Reporting</h3><p>DataLens, Power Query, Google Sheets; automation of recurring reporting</p></li>
-      <li><h3>AI &amp; LLM</h3><p>Claude-based RAG system, LLM classification pipelines, Claude Code</p></li>
-      <li><h3>Processes</h3><p>Process analysis and optimization, process mapping (Miro), ticket-system rollout (Yandex Tracker), technical specifications for developers, risk assessment, knowledge base and guidelines</p></li>
-      <li><h3>Research &amp; Communication</h3><p>Requirements gathering, semi-structured interviews, presenting data to non-technical stakeholders, defending findings, including those unfavourable to the business</p></li>
-      <li><h3>Tools</h3><p>Git, Bash, Figma, ClickUp, Notion</p></li>
-      <li><h3>Languages</h3><p>Russian (native), English (C1)</p></li>
+      <li><h3>Business analysis</h3><p>Requirements gathering and specification, semi-structured interviews, process analysis and mapping (Miro), technical and functional specifications, CJM, risk assessment</p></li>
+      <li><h3>Data &amp; BI</h3><p>SQL (basic), Python/pandas (developed with Claude Code), Excel, Power Query, 1C, ETL, data quality, DataLens, Superset</p></li>
+      <li><h3>Automation &amp; AI</h3><p>Yandex Tracker (automations), LLM pipelines, RAG, Claude Code</p></li>
+      <li><h3>Communication</h3><p>Presenting data to non-technical stakeholders, defending findings, working with developers, legal and external partners</p></li>
+      <li><h3>Tools</h3><p>Git, ClickUp, Google Sheets</p></li>
+      <li><h3>Languages</h3><p>Russian — native, English — C1</p></li>
     </ul>
     <ul class="skills ru">
-      <li><h3>Управление данными</h3><p>Ведение справочников (сопоставление похожих наименований оборудования, связи аффилированных поставщиков, классификация по ОКПД2 и медицинским тематикам); контроль качества данных (дубли, пропуски); ручная разметка данных для классификатора; прослеживаемость расчётов</p></li>
-      <li><h3>Данные и аналитика</h3><p>Python/pandas, SQL (базовый уровень), ETL-пайплайны, regex, Power Query, 1С; разбор корневых причин и аномалий; аналитика закупок, продаж и финансов; модели расчёта стоимости теста</p></li>
-      <li><h3>BI и отчётность</h3><p>DataLens, Power Query, Google Sheets; автоматизация регулярной отчётности</p></li>
-      <li><h3>AI и LLM</h3><p>RAG-система на базе Claude, LLM-пайплайны классификации, Claude Code</p></li>
-      <li><h3>Процессы</h3><p>Анализ и оптимизация процессов, карты процессов (Miro), внедрение тикет-системы (Яндекс Трекер), ТЗ для разработки, оценка рисков, база знаний и инструкции</p></li>
-      <li><h3>Исследования и коммуникация</h3><p>Сбор требований, полуструктурированные интервью, подача данных нетехническим заказчикам, защита выводов, в том числе неудобных для бизнеса</p></li>
-      <li><h3>Инструменты</h3><p>Git, Bash, Figma, ClickUp, Notion</p></li>
+      <li><h3>Бизнес-анализ</h3><p>Сбор и формализация требований, полуструктурированные интервью, анализ и картирование процессов (Miro), ТЗ и функциональные требования, CJM, оценка рисков</p></li>
+      <li><h3>Данные и BI</h3><p>SQL (базовый), Python/pandas (разработка с Claude Code), Excel, Power Query, 1С, ETL, контроль качества данных, DataLens, Superset</p></li>
+      <li><h3>Автоматизация и AI</h3><p>Яндекс Трекер (автоматизации), LLM-пайплайны, RAG, Claude Code</p></li>
+      <li><h3>Коммуникация</h3><p>Презентация данных нетехническим заказчикам, защита выводов, работа с разработкой, юристами и внешними партнёрами</p></li>
+      <li><h3>Инструменты</h3><p>Git, ClickUp, Google Sheets</p></li>
       <li><h3>Языки</h3><p>Русский — родной, английский — C1</p></li>
     </ul>
   </section>
@@ -297,67 +312,95 @@ a.val:hover{color:var(--ink)}
   <section class="frame" id="experience" aria-labelledby="exp-h">
     <div class="exp-head">
       <h2 class="h2" id="exp-h"><span class="en">Experience</span><span class="ru">Опыт работы</span></h2>
-      <p class="kicker"><span class="en">Mar 2023 — present</span><span class="ru">Март 2023 — н.в.</span></p>
+      <p class="kicker"><span class="en">Sep 2020 — present</span><span class="ru">Сентябрь 2020 — н.в.</span></p>
     </div>
 
     <article class="job">
       <div class="job-side">
         <p class="kicker"><span class="en">Mar 2026 — present</span><span class="ru">Март 2026 — н.в.</span></p>
         <h3 class="org"><span class="en">Laboratory equipment manufacturer and distributor</span><span class="ru">Производитель и дистрибьютор лабораторного оборудования</span></h3>
-        <p class="role"><span class="en">Data Analyst &amp; Market Researcher</span><span class="ru">Аналитик данных и исследователь рынка</span></p>
+        <p class="role"><span class="en">Data Analyst</span><span class="ru">Аналитик данных</span></p>
         <p class="where"><span class="en">Saint Petersburg</span><span class="ru">Санкт-Петербург</span></p>
       </div>
       <div>
         <ul class="figs">
-          <li><span class="num">400K+</span><p class="cap"><span class="en">Government-procurement records per year</span><span class="ru">Записей госзакупок в год</span></p></li>
-          <li><span class="num num--word"><span class="en">Days → hours</span><span class="ru">Дни → часы</span></span><p class="cap"><span class="en">Data-retrieval time</span><span class="ru">Время получения данных</span></p></li>
-          <li><span class="num">6</span><p class="cap"><span class="en">Semi-structured user interviews</span><span class="ru">Полуструктурированных интервью с пользователями</span></p></li>
+          <li><span class="num">4<small class="en">weeks</small><small class="ru">недели</small></span><p class="cap"><span class="en">To launch the procurement analysis tool</span><span class="ru">На запуск инструмента анализа госзакупок</span></p></li>
+          <li><span class="num num--word"><span class="en">Days → hours</span><span class="ru">Дни → часы</span></span><p class="cap"><span class="en">Procurement data retrieval</span><span class="ru">Получение данных о госзакупках</span></p></li>
+          <li><span class="num">400K+</span><p class="cap"><span class="en">Public-procurement records per year</span><span class="ru">Записей ЕИС в год</span></p></li>
         </ul>
         <ul class="bul en">
-          <li>Built and maintain an automated Python ETL pipeline processing 400K+ government-procurement records per year, cutting data-retrieval time from days to hours</li>
-          <li>Business rules are kept separate from the processing engine, so non-engineers can review rule changes and calculation logic stays transparent and auditable</li>
-          <li>Built in data quality checks (duplicates, missing values in specific fields); maintain reference data: matching similarly-named equipment, mapping affiliated vendors, classification by OKPD2 and medical topics</li>
-          <li>Investigate root causes of pricing anomalies in procurement data, where similarly-named equipment and undisclosed vendor affiliations distort raw figures</li>
-          <li>A government-procurement analysis tool for the IVD and lab-equipment market: own metric and reporting logic; 6 semi-structured user interviews led to changes in product classification, metric definitions and information layout</li>
-          <li>Built a Claude-based RAG system that searches for information on medical equipment and pharmaceuticals by topic and exports results to CSV; run colleagues' requests through it</li>
-          <li>Manually labeled data for a medical-topic classifier (regex rules and an LLM pipeline)</li>
-          <li>Automated sales and finance analytics on 1C data (Power Query, Python/pandas); build DataLens dashboards for team requests; cost-per-test models and year-over-year comparison of company finances</li>
+          <li>Launched a government-procurement analysis tool for the IVD market in 4 weeks, replacing manual contract search for the sales team; 6 user interviews led to changes in product classification, metrics and structure</li>
+          <li>Cut government-procurement data retrieval from days to hours: built a Python/pandas ETL pipeline in 2 weeks for 400K+ public-procurement records per year; kept business rules separate so non-engineers can review them</li>
+          <li>Traced root causes of price anomalies in procurement data (similarly named equipment, undisclosed vendor affiliations) and fixed them with reference data and data quality checks (duplicates, missing values)</li>
+          <li>Audited the commercial department for 2022–2025: linked 4 1C extracts via composite keys into a single data model (Excel)</li>
+          <li>Moved recurring sales and finance analytics from manual spreadsheets to automated reports on 1C data (Power Query, Python/pandas)</li>
+          <li>Ran 5 lab-diagnostics market studies (patient flow, competitors, regulatory registries in Russia, EU, China, FDA); based on my findings, management declined a contract with a supplier</li>
+          <li>Built an equipment install base from public-procurement data: brand dictionaries + LLM-based name normalization, surfaced in DataLens and Superset dashboards</li>
+          <li>Built a RAG system over the medical-device registry in 1 week (Python, local embeddings, CLI, Claude Code); benchmarked it against a Claude Project on 5 real colleague queries and chose the Claude Project as more accurate and easier for users</li>
         </ul>
         <ul class="bul ru">
-          <li>Построила и поддерживаю автоматизированный ETL-пайплайн на Python: 400K+ записей госзакупок в год, время получения данных сократилось с дней до часов</li>
-          <li>Бизнес-правила вынесены отдельно от движка обработки: изменения правил может проверить не-инженер, логика расчётов прозрачна и проверяема</li>
-          <li>Встроила контроль качества данных (дубли, пропуски в отдельных полях); веду справочники: сопоставление похожих наименований оборудования, связи аффилированных поставщиков, классификация по ОКПД2 и медицинским тематикам</li>
-          <li>Разбираю корневые причины ценовых аномалий в данных закупок: похожие названия оборудования и нераскрытая аффилированность поставщиков искажают сырые цифры</li>
-          <li>Инструмент анализа госзакупок рынка ИВД и лабораторного оборудования: отвечаю за логику метрик и отчётности; по итогам 6 полуструктурированных интервью с пользователями изменили классификацию продуктов, определения метрик и подачу информации</li>
-          <li>Собрала RAG-систему на базе Claude: поиск информации о медицинском оборудовании и фармацевтике по заданным тематикам с выгрузкой в CSV; выполняю через неё запросы коллег</li>
-          <li>Вручную размечала данные для классификатора медицинских тематик (правила regex и LLM-пайплайн)</li>
-          <li>Автоматизировала аналитику продаж и финансов на данных 1С (Power Query, Python/pandas); строю дашборды в DataLens под запросы команды; модели расчёта стоимости теста, сравнение финансов компании по годам</li>
+          <li>За 4 недели запустила инструмент анализа госзакупок ИВД для отдела продаж вместо ручного поиска контрактов; по итогам 6 интервью с пользователями изменила классификацию продуктов, метрики и структуру</li>
+          <li>Сократила время получения данных о госзакупках с дней до часов: за 2 недели построила ETL-пайплайн на Python/pandas для 400K+ записей ЕИС в год; бизнес-правила вынесла отдельно, чтобы их проверял не-инженер</li>
+          <li>Нашла корневые причины ценовых аномалий в закупках (похожие наименования оборудования, нераскрытая аффилированность поставщиков) и закрыла их справочниками и контролем качества данных (дубли, пропуски)</li>
+          <li>Провела аудит коммерческого отдела за 2022–2025: связала 4 выгрузки 1С составными ключами в единую модель данных (Excel)</li>
+          <li>Перевела регулярную аналитику продаж и финансов с ручных таблиц на автоматические отчёты по данным 1С (Power Query, Python/pandas)</li>
+          <li>Провела 5 исследований рынков лабораторной диагностики (пациентопоток, конкуренты, регуляторные реестры РФ, ЕС, Китая, FDA); по моим выводам руководство отказалось от контракта с поставщиком</li>
+          <li>Собрала инсталл-базу оборудования по данным ЕИС: справочники брендов + нормализация наименований через LLM, результат выведен в дашборды DataLens и Superset</li>
+          <li>За 1 неделю собрала RAG-систему по реестру медизделий (Python, локальные эмбеддинги, CLI, Claude Code); на 5 реальных запросах коллег сравнила её с Claude Project и выбрала Claude Project: точнее и понятнее пользователям</li>
         </ul>
       </div>
     </article>
 
     <article class="job">
       <div class="job-side">
-        <p class="kicker"><span class="en">Mar 2023 — Feb 2026</span><span class="ru">Март 2023 — февраль 2026</span></p>
+        <p class="kicker"><span class="en">Apr 2023 — Feb 2026</span><span class="ru">Апрель 2023 — февраль 2026</span></p>
         <h3 class="org"><span class="en">Yandex</span><span class="ru">Яндекс</span></h3>
-        <p class="role"><span class="en">Project Manager, joint programs with universities (ITMO, HSE, MIPT)</span><span class="ru">Менеджер проектов, совместные программы с университетами (ИТМО, ВШЭ, МФТИ)</span></p>
+        <p class="role"><span class="en">Project Manager, joint programs with universities (ITMO, HSE, MIPT)</span><span class="ru">Менеджер проектов, программы с ИТМО, ВШЭ, МФТИ</span></p>
         <p class="where"><span class="en">Remote</span><span class="ru">Удалённо</span></p>
       </div>
       <div>
         <ul class="figs">
-          <li><span class="num">60 → 10<small class="en">min</small><small class="ru">мин</small></span><p class="cap"><span class="en">Processing time for all applications</span><span class="ru">Обработка всех заявок</span></p></li>
-          <li><span class="num">2<small class="en">h</small><small class="ru">ч</small> → 30<small class="en">min</small><small class="ru">мин</small></span><p class="cap"><span class="en">Response time per student</span><span class="ru">Ответ студенту</span></p></li>
-          <li><span class="num"><span class="en">1,000–1,500</span><span class="ru">1000–1500</span></span><p class="cap"><span class="en">Applications per half-year</span><span class="ru">Заявок за полгода</span></p></li>
+          <li><span class="num">60 → 10<small class="en">min</small><small class="ru">мин</small></span><p class="cap"><span class="en">Application processing</span><span class="ru">Обработка заявок</span></p></li>
+          <li><span class="num">2<small class="en">h</small><small class="ru">ч</small> → 30<small class="en">min</small><small class="ru">мин</small></span><p class="cap"><span class="en">Student response time</span><span class="ru">Ответ студенту</span></p></li>
+          <li><span class="num">−40%</span><p class="cap"><span class="en">Student dissatisfaction in one semester</span><span class="ru">Неудовлетворённость студентов за семестр</span></p></li>
         </ul>
         <ul class="bul en">
-          <li>Mapped the application-handling process in Miro and replaced Google Sheets with a Yandex Tracker ticket system (1,000–1,500 applications per half-year): processing time cut from 60 to 10 min, response time per student from 2 h to 30 min</li>
-          <li>Wrote a full technical specification for a developer to automate the admissions campaign and ran the project; reported failures with hypotheses about their causes</li>
-          <li>Maintained a knowledge base and guidelines and handed them over to support admins; owned educational processes from document workflow to student communications and payment verification</li>
+          <li>Cut application processing from 60 to 10 minutes and student response time from 2 hours to 30 minutes: mapped the process in Miro and moved 1,000–1,500 applications per half-year from Google Sheets to Yandex Tracker with automations</li>
+          <li>Wrote a full technical specification for automating the admissions campaign and ran the project with developers: tracked progress, reported failures with root-cause hypotheses</li>
+          <li>Reduced dissatisfaction among HighLoad Systems master's students (60+) by 40% in one semester: launched CSAT/NPS surveys that led to instructor changes; weekly meetings added ~20% more</li>
+          <li>Assessed exam risks (two formats, slot shortage): extra slots were added, removing the risk of unequal conditions</li>
+          <li>Took part in hiring and onboarding 5 coordinators: guidelines, scripts, annual task calendar, regular 1:1s</li>
         </ul>
         <ul class="bul ru">
-          <li>Описала процесс обработки заявок картами в Miro и внедрила тикет-систему в Яндекс Трекере вместо Google Sheets (1000–1500 заявок за полгода): обработка всех заявок — с 60 до 10 минут, ответ студенту — с 2 часов до 30 минут</li>
-          <li>Написала полное ТЗ разработчику на автоматизацию приёмной кампании, вела проект; при сбоях передавала отчёты об ошибках с гипотезами о причинах</li>
-          <li>Вела базу знаний и инструкции, передала их администраторам поддержки; отвечала за учебные процессы от документооборота до коммуникаций со студентами и контроль проверки выплат</li>
+          <li>Сократила обработку заявок с 60 до 10 минут, а ответ студенту — с 2 часов до 30 минут: картировала процесс в Miro и перевела 1000–1500 заявок за полгода из Google Sheets в Яндекс Трекер с автоматизациями</li>
+          <li>Написала полное ТЗ на автоматизацию приёмной кампании и вела проект с разработкой: контроль хода работ, отчёты о сбоях с гипотезами о причинах</li>
+          <li>Снизила неудовлетворённость студентов магистратуры HighLoad Systems (60+ человек) на 40% за семестр: запустила опросы CSAT/NPS, по итогам заменили преподавателей; еженедельные встречи дали ещё ~20%</li>
+          <li>Оценила риски экзамена (два формата, нехватка слотов): добавили слоты и сняли риск неравных условий</li>
+          <li>Участвовала в найме и онбординге 5 кураторов: регламенты, скрипты, годовой календарь задач, регулярные 1-1</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="job">
+      <div class="job-side">
+        <p class="kicker"><span class="en">Sep 2020 — Aug 2023</span><span class="ru">Сентябрь 2020 — август 2023</span></p>
+        <h3 class="org"><span class="en">Freelance; MCK Tsel + UNTI 2035</span><span class="ru">Фриланс; АНО ДПО МЦК «Цель» + УНТИ 2035</span></h3>
+        <p class="role"><span class="en">Project Manager, online education</span><span class="ru">Менеджер проектов, онлайн-образование</span></p>
+        <p class="where"><span class="en">Remote</span><span class="ru">Удалённо</span></p>
+      </div>
+      <div>
+        <ul class="figs">
+          <li><span class="num">30 → 14</span><p class="cap"><span class="en">Days to launch an online product</span><span class="ru">Дней на запуск онлайн-продукта</span></p></li>
+          <li><span class="num">10+</span><p class="cap"><span class="en">Full launch cycles</span><span class="ru">Полных циклов запуска</span></p></li>
+          <li><span class="num">−60%</span><p class="cap"><span class="en">Support tickets per week</span><span class="ru">Обращений в техподдержку в неделю</span></p></li>
+        </ul>
+        <ul class="bul en">
+          <li>Cut average online-product launch time from 30 to 14 days: 10+ full launch cycles with distributed teams of 5–30 people</li>
+          <li>Reduced support tickets (GetCourse) by 60%, from 400 per week</li>
+        </ul>
+        <ul class="bul ru">
+          <li>Сократила среднее время запуска онлайн-продукта с 30 до 14 дней: 10+ полных циклов запуска с распределёнными командами 5–30 человек</li>
+          <li>Сократила поток обращений в техподдержку (GetCourse) на 60% — с 400 в неделю</li>
         </ul>
       </div>
     </article>
@@ -373,17 +416,17 @@ a.val:hover{color:var(--ink)}
         <div class="edu">
           <div class="edu-item">
             <b><span class="en">Saint Petersburg State University</span><span class="ru">Санкт-Петербургский государственный университет</span></b>
-            <span><span class="en">2019 — 2025 · Clinical Psychology, Public Health Psychology</span><span class="ru">2019 — 2025 · Клиническая психология, психология здоровья</span></span>
-          </div>
-          <div class="edu-item">
-            <b><span class="en">Publication</span><span class="ru">Публикация</span></b>
-            <span><span class="en">Co-author of a qualitative-methods paper, 7th European Congress of Qualitative Inquiry (ECQI-2024, Helsinki)</span><span class="ru">Соавтор статьи по качественным методам, 7-й Европейский конгресс качественных исследований (ECQI-2024, Хельсинки)</span></span>
-            <a class="link" href="https://storage.googleapis.com/smooty-1220.appspot.com/uploads/4112/1718106409_ECQI2024Proceedings.pdf#page=257" target="_blank" rel="noopener"><span class="en">ECQI-2024 Proceedings, p. 257 ↗</span><span class="ru">Сборник ECQI-2024, с. 257 ↗</span></a>
+            <span><span class="en">2019 — 2025 · Clinical Psychology (specialist degree)</span><span class="ru">2019 — 2025 · Клиническая психология (специалитет)</span></span>
           </div>
           <div class="edu-item">
             <b><span class="en">Certificate</span><span class="ru">Сертификат</span></b>
-            <span><span class="en">Yandex School of Data Analysis — AI Agents</span><span class="ru">Школа анализа данных Яндекса — AI-агенты</span></span>
+            <span><span class="en">Yandex School of Data Analysis — AI Agents, 2026</span><span class="ru">Школа анализа данных Яндекса — AI-агенты, 2026</span></span>
             <a class="link" href="https://education.yandex.ru/profile/docs?id=a99348c9-fb9d-4825-9e31-485437a5f515" target="_blank" rel="noopener"><span class="en">View certificate ↗</span><span class="ru">Открыть сертификат ↗</span></a>
+          </div>
+          <div class="edu-item">
+            <b><span class="en">Publication</span><span class="ru">Публикация</span></b>
+            <span><span class="en">Co-author of a qualitative-methods paper, ECQI-2024 (Helsinki)</span><span class="ru">Соавтор статьи по качественным методам исследований, ECQI-2024 (Хельсинки)</span></span>
+            <a class="link" href="https://storage.googleapis.com/smooty-1220.appspot.com/uploads/4112/1718106409_ECQI2024Proceedings.pdf#page=257" target="_blank" rel="noopener"><span class="en">ECQI-2024 Proceedings, p. 257 ↗</span><span class="ru">Сборник ECQI-2024, с. 257 ↗</span></a>
           </div>
         </div>
       </div>
@@ -399,6 +442,11 @@ a.val:hover{color:var(--ink)}
             <span class="lbl">Telegram</span>
             <a class="val" href="https://t.me/askannasklv" target="_blank" rel="noopener">@askannasklv</a>
           </div>
+          <div class="contact">
+            <span class="lbl"><span class="en">CV</span><span class="ru">Резюме</span></span>
+            <a class="cvbtn en" href="cv/Sokolova_CV_EN.pdf" target="_blank" rel="noopener">Download CV · PDF ↓</a>
+            <a class="cvbtn ru" href="cv/Sokolova_CV_RU.pdf" target="_blank" rel="noopener">Скачать резюме · PDF ↓</a>
+          </div>
         </div>
       </div>
     </div>
@@ -413,6 +461,7 @@ a.val:hover{color:var(--ink)}
   </section>
 
 </main>
+
 
 <script>
 (function(){
