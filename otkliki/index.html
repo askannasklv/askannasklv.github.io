@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Отклики</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #fff);
+    --bg2: var(--tg-theme-secondary-bg-color, #f2f2f6);
+    --tx: var(--tg-theme-text-color, #111);
+    --hint: var(--tg-theme-hint-color, #8a8a8e);
+    --link: var(--tg-theme-link-color, #2a7ae2);
+    --btn: var(--tg-theme-button-color, #2a7ae2);
+    --btntx: var(--tg-theme-button-text-color, #fff);
+    --ok: #34a853; --warn: #f29d38; --bad: #e5484d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.4 -apple-system, system-ui, sans-serif; background: var(--bg2); color: var(--tx); padding-bottom: 72px; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg2); padding: 12px 14px 6px; display: flex; align-items: center; gap: 8px; }
+  header h1 { font-size: 20px; margin: 0; flex: 1; }
+  main { padding: 0 12px; }
+  .card { background: var(--bg); border-radius: 14px; padding: 12px 14px; margin: 10px 0; }
+  .muted { color: var(--hint); font-size: 13px; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .sp { flex: 1; }
+  button, .btn { border: 0; border-radius: 10px; padding: 8px 12px; font: inherit; font-size: 14px; background: var(--btn); color: var(--btntx); cursor: pointer; }
+  button.sec { background: var(--bg2); color: var(--tx); }
+  button.ghost { background: transparent; color: var(--link); padding: 4px 6px; }
+  button.danger { background: transparent; color: var(--bad); }
+  button:disabled { opacity: .5; }
+  input, textarea, select { width: 100%; font: inherit; padding: 9px 10px; border-radius: 10px; border: 1px solid rgba(128,128,128,.25); background: var(--bg); color: var(--tx); }
+  textarea { min-height: 80px; resize: vertical; }
+  label { display: block; font-size: 13px; color: var(--hint); margin: 10px 0 4px; }
+  pre.tpl { white-space: pre-wrap; font: 13px/1.4 ui-monospace, Menlo, monospace; background: var(--bg2); padding: 10px; border-radius: 10px; margin: 8px 0; }
+  .badge { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 99px; background: var(--bg2); color: var(--tx); white-space: nowrap; }
+  .b-ok { background: rgba(52,168,83,.15); color: var(--ok); }
+  .b-warn { background: rgba(242,157,56,.18); color: #b86e10; }
+  .b-bad { background: rgba(229,72,77,.15); color: var(--bad); }
+  .b-q { background: rgba(255,196,0,.22); }
+  nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: var(--bg); border-top: 1px solid rgba(128,128,128,.15); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); z-index: 10; }
+  nav button { flex: 1; background: none; color: var(--hint); font-size: 12px; padding: 4px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  nav button b { font-size: 20px; font-weight: normal; }
+  nav button.on { color: var(--btn); }
+  .seg { display: flex; background: var(--bg); border-radius: 10px; padding: 3px; gap: 3px; }
+  .seg button { flex: 1; background: none; color: var(--tx); padding: 6px; }
+  .seg button.on { background: var(--btn); color: var(--btntx); }
+  .chips { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0; }
+  .chips button { background: var(--bg); color: var(--tx); white-space: nowrap; padding: 6px 10px; font-size: 13px; }
+  .chips button.on { background: var(--btn); color: var(--btntx); }
+  .bar { height: 22px; background: var(--btn); border-radius: 6px; min-width: 2px; }
+  .barrow { display: grid; grid-template-columns: 110px 1fr 54px; gap: 8px; align-items: center; margin: 6px 0; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(128,128,128,.15); }
+  th { color: var(--hint); font-weight: normal; }
+  td.n, th.n { text-align: right; }
+  .contact { border-top: 1px solid rgba(128,128,128,.15); padding-top: 10px; margin-top: 10px; }
+  .pings { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+  .ping { font-size: 12px; padding: 4px 8px; border-radius: 8px; background: var(--bg2); border: 0; color: var(--tx); }
+  .ping.set { background: rgba(52,168,83,.15); color: var(--ok); }
+  .msg { background: var(--bg2); border-radius: 10px; padding: 8px 10px; margin: 6px 0; font-size: 13px; white-space: pre-wrap; }
+  .big { font-size: 28px; font-weight: 600; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .toast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); background: rgba(0,0,0,.8); color: #fff; padding: 8px 14px; border-radius: 10px; font-size: 14px; z-index: 20; }
+  .center { text-align: center; padding: 40px 20px; }
+  a { color: var(--link); }
+  details summary { cursor: pointer; color: var(--link); font-size: 14px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<header><h1 id="title">Отклики</h1><span id="spin" class="muted"></span></header>
+<main id="app"><div class="center muted">Загружаю…</div></main>
+<nav id="nav">
+  <button data-v="today"><b>☀️</b>Сегодня</button>
+  <button data-v="list"><b>📋</b>Отклики</button>
+  <button data-v="add"><b>➕</b>Добавить</button>
+  <button data-v="stats"><b>📊</b>Аналитика</button>
+</nav>
+<script>
+const API = 'APPS_SCRIPT_URL';
+const tg = window.Telegram && Telegram.WebApp;
+if (tg) { tg.ready(); tg.expand(); }
+
+const PLATFORMS = ['hh', 'getmatch', 'LinkedIn', 'Хабр Карьера', 'Dreamjob', 'SuperJob', 'Сетка', 'Telegram', 'Карьерный сайт'];
+const PLATFORM_RE = [[/hh\.ru/i, 'hh'], [/getmatch/i, 'getmatch'], [/linkedin|lnkd\.in/i, 'LinkedIn'], [/career\.habr|habr\.com\/.*career/i, 'Хабр Карьера'], [/dreamjob/i, 'Dreamjob'], [/superjob/i, 'SuperJob'], [/setka\.ru|set\.ki/i, 'Сетка'], [/t\.me\//i, 'Telegram']];
+const STAGES = ['', 'ответ/переписка', 'звонок', 'собес', 'финал', 'оффер', 'отказ', 'игнор'];
+const RANK = { 'ответ/переписка': 1, 'звонок': 2, 'собес': 3, 'финал': 4, 'оффер': 5 };
+const FUNNEL = ['Отклик', 'Ответ', 'Звонок', 'Собес', 'Финал', 'Оффер'];
+const MOODS = ['😫', '😕', '😐', '🙂', '🤩'];
+
+let D = null, view = 'today', openId = null, mode = 'all', filter = 'active', query = '';
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const ru = s => s ? s.slice(8, 10) + '.' + s.slice(5, 7) : '';
+const days = (a, b) => Math.round((new Date(b) - new Date(a)) / 864e5);
+const platformOf = u => { if (!u) return ''; for (const [r, n] of PLATFORM_RE) if (r.test(u)) return n; return 'Карьерный сайт'; };
+const who = c => c.tg ? '@' + c.tg : String(c.contact).split('\n')[0].slice(0, 40);
+function toast(t) { const e = document.createElement('div'); e.className = 'toast'; e.textContent = t; document.body.appendChild(e); setTimeout(() => e.remove(), 1800); }
+
+async function call(action, payload) {
+  $('#spin').textContent = '⏳';
+  try {
+    const r = await fetch(API, { method: 'POST', body: JSON.stringify({ initData: tg ? tg.initData : '', action, payload }) });
+    const j = await r.json();
+    if (j.error) throw new Error(j.error === 'forbidden' ? 'Нет доступа. Открой приложение из бота (и сначала нажми /start).' : j.error);
+    D = j; prep(); render();
+    return true;
+  } catch (e) { $('#app').innerHTML = D ? $('#app').innerHTML : ''; toast('Ошибка: ' + e.message); if (!D) $('#app').innerHTML = '<div class="center">' + esc(e.message) + '</div>'; return false; }
+  finally { $('#spin').textContent = ''; }
+}
+
+/* ---------- Подготовка данных ---------- */
+function prep() {
+  D.cmap = {}; D.companies.forEach(c => { c.contacts = []; c.events = []; D.cmap[c.id] = c; });
+  D.contacts.forEach(c => { const comp = D.cmap[c.cid]; if (comp) comp.contacts.push(c); c.messages = []; });
+  const kmap = {}; D.contacts.forEach(c => kmap[c.id] = c);
+  D.messages.forEach(m => kmap[m.contactId] && kmap[m.contactId].messages.push(m));
+  D.events.forEach(e => D.cmap[e.cid] && D.cmap[e.cid].events.push(e));
+  D.tplMap = {}; D.templates.forEach(t => D.tplMap[t.code] = t);
+  D.companies.forEach(c => {
+    c.answered = c.contacts.filter(k => k.replied || RANK[k.stage] >= 1);
+    c.quality = c.answered.filter(k => k.tg).length >= 2;
+    c.rank = Math.max(0, ...c.contacts.map(k => RANK[k.stage] || ((k.replied || k.stage === 'отказ') ? 1 : 0)));
+    const ai = String(c.comment).match(/попадани[яе][^0-9]{0,15}(\d{1,3})/i);
+    c.ai = ai ? Number(ai[1]) : null;
+  });
+}
+function fill(text, comp, c) {
+  return String(text).replace(/\{площадка\}/g, D.platformPrep[comp.platform] || 'вашем карьерном сайте').replace(/\{ссылка\}/g, comp.url || '').replace(/\{компания\}/g, comp.name || '').replace(/\{дата\}/g, ru(c && c.stepAt));
+}
+function stateBadge(c) {
+  const s = c.state;
+  const cls = { 'отказ': 'b-bad', 'игнор': 'b-bad', 'ответ/переписка': 'b-ok', 'звонок': 'b-ok', 'собес': 'b-ok', 'финал': 'b-ok', 'оффер': 'b-ok', 'пинг 2': 'b-warn', 'пинг 3': 'b-warn', 'написать': 'b-warn' }[s] || '';
+  return '<span class="badge ' + cls + '">' + esc(s) + '</span>';
+}
+function todayItems() {
+  const t = D.today, items = [];
+  D.contacts.forEach(c => {
+    const comp = D.cmap[c.cid]; if (!comp) return;
+    if (c.step && c.stepAt && c.stepAt <= t) items.push({ kind: 'step', c, comp });
+    if (comp.rejected) return;
+    if (c.due) items.push({ kind: c.due, c, comp });
+  });
+  return items;
+}
+
+/* ---------- Рендер ---------- */
+function render() {
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === view && !openId));
+  if (tg) { if (openId) tg.BackButton.show(); else tg.BackButton.hide(); }
+  if (!D) return;
+  const h = openId ? renderCompany(D.cmap[openId]) : ({ today: renderToday, list: renderList, add: renderAdd, stats: renderStats }[view])();
+  $('#app').innerHTML = h;
+  $('#title').textContent = openId ? (D.cmap[openId] || {}).name || 'Отклик' : { today: 'Сегодня, ' + ru(D.today), list: 'Отклики', add: 'Новый отклик', stats: 'Аналитика' }[view];
+}
+
+function tplCard(c, comp, codes, title, actions) {
+  return '<div class="card"><div class="row"><b>' + esc(title) + '</b><span class="sp"></span><span class="muted">' + esc(comp.name) + '</span></div>' +
+    '<div class="muted">' + esc(who(c)) + (c.from ? ' · контакт дал(а) ' + esc(c.from) : '') + '</div>' +
+    codes.map((k, i) => (codes.length > 1 ? '<div class="muted">Вариант ' + (i + 1) + '</div>' : '') + '<pre class="tpl">' + esc(fill((D.tplMap[k] || {}).text || '', comp, c)) + '</pre>' +
+      '<button class="ghost" data-copy="' + esc(k) + '" data-c="' + c.id + '">📋 Скопировать</button>').join('') +
+    '<div class="row" style="margin-top:6px">' + (c.tg ? '<button class="sec" data-chat="' + esc(c.tg) + '">💬 Открыть чат</button>' : '') + actions + '</div></div>';
+}
+
+function renderToday() {
+  const items = todayItems();
+  const TPL = { p1: 'WELCOME', p2: 'PING2', p3: 'PING3' }, TITLE = { p1: '✉️ Первое сообщение', p2: '🔔 Пинг 2', p3: '🔔 Пинг 3' };
+  let h = '';
+  const wk = weekStats();
+  h += '<div class="card"><div class="grid2"><div><div class="muted">Откликов за неделю</div><div class="big">' + wk.all + '</div></div><div><div class="muted">Качественных</div><div class="big">' + wk.q + '</div></div></div></div>';
+  if (!items.length) h += '<div class="card center">🎉 Сегодня пинговать некого</div>';
+  items.forEach(({ kind, c, comp }) => {
+    if (kind === 'step') { const st = D.steps[c.step]; if (st) h += tplCard(c, comp, st.tpls, '🔁 ' + st.title, '<button data-sent="st" data-c="' + c.id + '">✅ Отправила</button><button class="sec" data-skip="' + c.id + '">✖ Неактуально</button>'); }
+    else h += tplCard(c, comp, [TPL[kind]], TITLE[kind], '<button data-sent="' + kind + '" data-c="' + c.id + '">✅ Отправила</button>');
+  });
+  const nc = D.companies.filter(c => !String(c.comment).trim() && !c.rejected);
+  if (nc.length) h += '<div class="card"><b>🔎 Без комментария</b><div class="muted">Проверь вакансию по ссылке: <a href="#" data-link="' + esc(D.checkChat) + '">чат проверки</a></div>' + nc.map(c => '<div class="row" style="margin-top:6px"><a href="#" data-open="' + c.id + '">' + esc(c.name || 'без названия') + '</a><span class="sp"></span>' + (c.url ? '<a href="#" data-link="' + esc(c.url) + '">вакансия ↗</a>' : '') + '</div>').join('') + '</div>';
+  return h;
+}
+
+function weekStats() {
+  const t = new Date(D.today), dow = (t.getUTCDay() + 6) % 7;
+  const start = new Date(t - dow * 864e5).toISOString().slice(0, 10);
+  const w = D.companies.filter(c => c.date >= start);
+  return { all: w.length, q: w.filter(c => c.quality).length };
+}
+
+function renderList() {
+  const f = { all: () => true, active: c => !c.rejected && !c.contacts.every(k => k.state === 'отказ' || k.state === 'игнор') || !c.contacts.length && !c.rejected, quality: c => c.quality, rejected: c => c.rejected || (c.contacts.length && c.contacts.every(k => k.state === 'отказ')) }[filter];
+  const q = query.toLowerCase();
+  const list = D.companies.filter(f).filter(c => !q || (c.name + ' ' + c.contacts.map(k => k.contact).join(' ')).toLowerCase().includes(q)).sort((a, b) => (b.date || '').localeCompare(a.date || '') || b.id - a.id);
+  let h = '<input id="q" placeholder="Поиск по компании или контакту" value="' + esc(query) + '">';
+  h += '<div class="chips">' + [['active', 'Активные'], ['all', 'Все'], ['quality', '⭐ Качественные'], ['rejected', 'Отказы']].map(([k, l]) => '<button data-filter="' + k + '" class="' + (filter === k ? 'on' : '') + '">' + l + '</button>').join('') + '</div>';
+  h += '<div class="muted">' + list.length + ' шт.</div>';
+  h += list.map(c => '<div class="card" data-open="' + c.id + '"><div class="row"><b>' + esc(c.name || 'без названия') + '</b>' + (c.quality ? '<span class="badge b-q">⭐ качественный</span>' : '') + '<span class="sp"></span><span class="muted">' + ru(c.date) + '</span></div>' +
+    '<div class="row muted" style="margin-top:4px">' + esc(c.platform || '—') + ' · контактов: ' + c.contacts.length + (c.rank ? ' · ' + FUNNEL[c.rank] : '') + (c.rejected ? ' <span class="badge b-bad">отказ</span>' : '') + '</div>' +
+    '<div class="row" style="margin-top:6px">' + c.contacts.map(k => '<span class="muted">' + esc(who(k)) + '</span>' + stateBadge(k)).join(' ') + '</div></div>').join('');
+  return h;
+}
+
+function renderCompany(c) {
+  if (!c) { openId = null; return renderList(); }
+  let h = '<div class="card">' +
+    '<label>Компания</label><input id="f-name" value="' + esc(c.name) + '">' +
+    '<label>Ссылка на вакансию</label><input id="f-url" value="' + esc(c.url) + '">' +
+    '<div class="grid2"><div><label>Площадка</label><select id="f-platform">' + PLATFORMS.map(p => '<option' + (p === c.platform ? ' selected' : '') + '>' + p + '</option>').join('') + '</select></div>' +
+    '<div><label>Дата отклика</label><input id="f-date" type="date" value="' + esc(c.date) + '"></div></div>' +
+    '<label>Комментарий</label><textarea id="f-comment">' + esc(c.comment) + '</textarea>' +
+    (!String(c.comment).trim() ? '<div class="muted">Проверь вакансию по ссылке: <a href="#" data-link="' + esc(D.checkChat) + '">чат проверки</a></div>' : '') +
+    '<div class="row" style="margin-top:10px"><label style="margin:0"><input type="checkbox" id="f-rej" style="width:auto" ' + (c.rejected ? 'checked' : '') + '> Отказ компании</label><span class="sp"></span>' +
+    (c.url ? '<button class="sec" data-link="' + esc(c.url) + '">Вакансия ↗</button>' : '') + '<button data-savecomp="' + c.id + '">Сохранить</button></div>' +
+    '<div class="row muted" style="margin-top:8px">' + (c.quality ? '<span class="badge b-q">⭐ качественный</span>' : 'Качественный: нужно 2 ответивших ТГ-контакта (сейчас ' + c.answered.filter(k => k.tg).length + ')') + '</div></div>';
+
+  h += '<div class="card"><b>Контакты</b>' + c.contacts.map(k => contactBlock(k, c)).join('') +
+    '<div class="contact"><label>Добавить контакт (@ник, ссылка, почта)</label><div class="row"><input id="new-contact" style="flex:1"><button data-addcontact="' + c.id + '">＋</button></div></div></div>';
+  h += '<div class="center"><button class="danger" data-delcomp="' + c.id + '">Удалить отклик</button></div>';
+  return h;
+}
+
+function contactBlock(k, comp) {
+  const ping = n => '<button class="ping ' + (k[n] ? 'set' : '') + '" data-ping="' + n + '" data-c="' + k.id + '">' + n.toUpperCase() + ': ' + (k[n] ? ru(k[n]) : 'отметить') + '</button>';
+  return '<div class="contact"><div class="row"><b>' + esc(who(k)) + '</b>' + stateBadge(k) + '<span class="sp"></span>' + (k.tg ? '<button class="ghost" data-chat="' + esc(k.tg) + '">💬 чат</button>' : '') + '</div>' +
+    (k.contact !== '@' + k.tg ? '<div class="muted" style="white-space:pre-wrap">' + esc(k.contact) + '</div>' : '') +
+    (k.from ? '<div class="muted">Контакт дал(а): ' + esc(k.from) + '</div>' : '') +
+    '<div class="pings">' + ping('p1') + ping('p2') + ping('p3') + '</div>' +
+    '<div class="grid2"><div><label>Этап</label><select data-stage="' + k.id + '">' + STAGES.map(s => '<option value="' + s + '"' + (s === k.stage ? ' selected' : '') + '>' + (s || '—') + '</option>').join('') + '</select></div>' +
+    '<div><label>Ответил(а)</label><input type="date" data-replied="' + k.id + '" value="' + esc(k.replied) + '"></div></div>' +
+    (k.step ? '<div class="muted" style="margin-top:6px">🔁 ' + esc((D.steps[k.step] || {}).title || k.step) + ' — ' + ru(k.stepAt) + ' <button class="ghost" data-skip="' + k.id + '">отменить</button></div>' : '') +
+    '<label>Заметка</label><textarea data-note="' + k.id + '" style="min-height:44px">' + esc(k.note) + '</textarea>' +
+    (k.messages.length ? '<details><summary>Сообщения рекрутера (' + k.messages.length + ')</summary>' + k.messages.map(m => '<div class="msg"><span class="muted">' + ru(m.date) + '</span>\n' + esc(m.text) + '</div>').join('') + '</details>' : '') +
+    '<details><summary>Шаблоны</summary><div class="row" style="margin-top:6px"><select data-tplsel="' + k.id + '" style="flex:1">' + D.templates.map(t => '<option value="' + esc(t.code) + '">' + esc(t.title) + '</option>').join('') + '</select></div>' +
+    '<pre class="tpl" id="tplprev-' + k.id + '">' + esc(fill((D.templates[0] || {}).text || '', comp, k)) + '</pre>' +
+    '<div class="row"><button class="sec" data-tplcopy="' + k.id + '">📋 Скопировать</button><button class="sec" data-tplsend="' + k.id + '">📨 Прислать в бот</button></div></details>' +
+    '<div class="row" style="margin-top:8px"><span class="sp"></span><button class="danger" data-delcontact="' + k.id + '">Удалить контакт</button></div></div>';
+}
+
+function renderAdd() {
+  return '<div class="card">' +
+    '<label>Компания</label><input id="a-name">' +
+    '<label>Ссылка на вакансию</label><input id="a-url" placeholder="https://…">' +
+    '<div class="grid2"><div><label>Площадка</label><select id="a-platform"><option value="">авто по ссылке</option>' + PLATFORMS.map(p => '<option>' + p + '</option>').join('') + '</select></div>' +
+    '<div><label>Дата отклика</label><input id="a-date" type="date" value="' + D.today + '"></div></div>' +
+    '<label>Комментарий</label><textarea id="a-comment" placeholder="Город | Формат | ЗП | Суть | Оценка попадания ИИ: …%"></textarea>' +
+    '<label>Контакты — по одному на строку</label><textarea id="a-contacts" placeholder="@nickname (hr)&#10;@another"></textarea>' +
+    '<div class="row" style="margin-top:12px"><span class="sp"></span><button id="a-save">Сохранить</button></div></div>';
+}
+
+/* ---------- Аналитика ---------- */
+function bars(rows, fmt) {
+  const max = Math.max(1, ...rows.map(r => r[1]));
+  return rows.map(([l, v, extra]) => '<div class="barrow"><span>' + esc(l) + '</span><div class="bar" style="width:' + (v / max * 100) + '%"></div><span class="n">' + (fmt ? fmt(v) : v) + (extra ? ' <span class="muted">' + extra + '</span>' : '') + '</span></div>').join('');
+}
+const pct = (a, b) => b ? Math.round(a / b * 100) + '%' : '—';
+const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+
+function renderStats() {
+  const comps = D.companies.filter(c => mode === 'all' || c.quality);
+  let h = '<div class="seg"><button data-mode="all" class="' + (mode === 'all' ? 'on' : '') + '">Все</button><button data-mode="quality" class="' + (mode === 'quality' ? 'on' : '') + '">⭐ Качественные</button></div>';
+  h += '<div class="muted" style="margin:6px 2px">Качественный отклик — у компании ≥ 2 ответивших ТГ-контакта. Всего откликов: ' + D.companies.length + ', качественных: ' + D.companies.filter(c => c.quality).length + '</div>';
+
+  // Воронка
+  const fun = FUNNEL.map((l, i) => [l, comps.filter(c => c.rank >= i).length]);
+  h += '<div class="card"><b>Воронка по этапам</b>' + bars(fun.map(([l, v], i) => [l, v, i ? pct(v, fun[0][1]) : ''])) + '</div>';
+
+  // Площадки: количество + конверсия
+  const byP = {};
+  comps.forEach(c => { const p = c.platform || '—'; (byP[p] = byP[p] || { n: 0, r: 0 }).n++; if (c.rank >= 1) byP[p].r++; });
+  const pl = Object.entries(byP).sort((a, b) => b[1].n - a[1].n);
+  h += '<div class="card"><b>Отклики по площадкам</b>' + bars(pl.map(([p, v]) => [p, v.n])) + '</div>';
+  h += '<div class="card"><b>Конверсия по площадкам</b><table><tr><th>Площадка</th><th class="n">Откликов</th><th class="n">С ответом</th><th class="n">Конверсия</th></tr>' +
+    pl.map(([p, v]) => '<tr><td>' + esc(p) + '</td><td class="n">' + v.n + '</td><td class="n">' + v.r + '</td><td class="n">' + pct(v.r, v.n) + '</td></tr>').join('') + '</table></div>';
+
+  // Среднее время ответа
+  const ks = comps.flatMap(c => c.contacts).filter(k => k.p1 && k.replied && k.replied >= k.p1);
+  const art = avg(ks.map(k => days(k.p1, k.replied)));
+  h += '<div class="card"><b>Среднее время ответа</b><div class="big">' + (art == null ? '—' : art.toFixed(1) + ' дн.') + '</div><div class="muted">от первого сообщения до ответа · по ' + ks.length + ' контактам</div></div>';
+
+  // Оценка ИИ и исход
+  const B = [['80%+', 80, 101], ['70–79%', 70, 80], ['60–69%', 60, 70], ['< 60%', 0, 60]];
+  h += '<div class="card"><b>Оценка попадания ИИ и исход</b><table><tr><th>Оценка</th><th class="n">Откликов</th><th class="n">Ответили</th><th class="n">Дошли до звонка+</th></tr>' +
+    B.map(([l, a, b]) => { const g = comps.filter(c => c.ai != null && c.ai >= a && c.ai < b); return '<tr><td>' + l + '</td><td class="n">' + g.length + '</td><td class="n">' + pct(g.filter(c => c.rank >= 1).length, g.length) + '</td><td class="n">' + pct(g.filter(c => c.rank >= 2).length, g.length) + '</td></tr>'; }).join('') +
+    '</table><div class="muted">без оценки в комментарии: ' + comps.filter(c => c.ai == null).length + '</div></div>';
+
+  // Время до собеса
+  const tti = comps.map(c => {
+    const ev = c.events.filter(e => e.type === 'stage' && RANK[e.value] >= 2).map(e => e.date).sort()[0] || c.contacts.filter(k => RANK[k.stage] >= 2).map(k => k.stageAt).sort()[0];
+    return ev && c.date ? days(c.date, ev) : null;
+  }).filter(x => x != null && x >= 0);
+  const at = avg(tti);
+  h += '<div class="card"><b>Время до звонка / собеса</b><div class="big">' + (at == null ? '—' : at.toFixed(1) + ' дн.') + '</div><div class="muted">от отклика до первого звонка или собеса · по ' + tti.length + ' откликам</div></div>';
+
+  h += '<div class="card"><b>Настроение</b>' + moodChart() + '</div>';
+  return h;
+}
+
+function moodChart() {
+  const n = 30, end = new Date(D.today), daysArr = [];
+  for (let i = n - 1; i >= 0; i--) daysArr.push(new Date(end - i * 864e5).toISOString().slice(0, 10));
+  const mood = {}; D.mood.forEach(m => mood[m.date] = Number(m.score));
+  if (!D.mood.length) return '<div class="muted">Пока нет оценок — отмечай настроение в сообщении бота в 12:00.</div>';
+  const ev = {}; D.events.forEach(e => { const d = ev[e.date] = ev[e.date] || { reply: 0, rej: 0, inv: 0 }; if (e.type === 'reply') d.reply++; if (e.type === 'stage' && e.value === 'отказ') d.rej++; if (e.type === 'stage' && RANK[e.value] >= 2) d.inv++; });
+  const W = 320, H = 150, px = i => 10 + i * (W - 20) / (n - 1), py = v => 12 + (5 - v) * (H - 52) / 4;
+  let pts = daysArr.map((d, i) => mood[d] ? [px(i), py(mood[d]), d] : null).filter(Boolean);
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%">';
+  [1, 3, 5].forEach(v => s += '<line x1="10" x2="' + (W - 10) + '" y1="' + py(v) + '" y2="' + py(v) + '" stroke="currentColor" opacity=".1"/><text x="0" y="' + (py(v) + 4) + '" font-size="10">' + MOODS[v - 1] + '</text>');
+  if (pts.length > 1) s += '<polyline fill="none" stroke="var(--btn)" stroke-width="2" points="' + pts.map(p => p[0] + ',' + p[1]).join(' ') + '"/>';
+  pts.forEach(p => s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.5" fill="var(--btn)"><title>' + ru(p[2]) + '</title></circle>');
+  daysArr.forEach((d, i) => { const e = ev[d]; if (!e) return; let y = H - 30; [['inv', 'var(--ok)'], ['reply', 'var(--link)'], ['rej', 'var(--bad)']].forEach(([k, col]) => { for (let j = 0; j < Math.min(e[k], 3); j++) { s += '<circle cx="' + px(i) + '" cy="' + y + '" r="3" fill="' + col + '"/>'; y += 7; } }); });
+  s += '<text x="10" y="' + (H - 2) + '" font-size="10" opacity=".6">' + ru(daysArr[0]) + '</text><text x="' + (W - 40) + '" y="' + (H - 2) + '" font-size="10" opacity=".6">' + ru(daysArr[n - 1]) + '</text></svg>';
+  return s + '<div class="muted"><span style="color:var(--ok)">●</span> приглашения · <span style="color:var(--link)">●</span> ответы · <span style="color:var(--bad)">●</span> отказы</div>';
+}
+
+/* ---------- События ---------- */
+function openLink(u) { if (tg) tg.openLink(u); else window.open(u); }
+function copy(text) { (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => toast('Скопировано'), () => { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); toast('Скопировано'); }); }
+const kById = id => D.contacts.find(k => String(k.id) === String(id));
+
+document.addEventListener('click', async e => {
+  const el = e.target.closest('button, a, [data-open]'); if (!el) return;
+  const d = el.dataset;
+  if (el.tagName === 'A') e.preventDefault();
+  if (d.v) { view = d.v; openId = null; window.scrollTo(0, 0); return render(); }
+  if (d.link) return openLink(d.link);
+  if (d.chat) { const u = 'https://t.me/' + d.chat; return tg ? tg.openTelegramLink(u) : window.open(u); }
+  if (d.copy) { const k = kById(d.c); return copy(fill(D.tplMap[d.copy].text, D.cmap[k.cid], k)); }
+  if (d.filter) { filter = d.filter; return render(); }
+  if (d.mode) { mode = d.mode; return render(); }
+  if (d.sent) return call('markSent', { id: d.c, kind: d.sent }).then(ok => ok && toast('Отмечено ✅'));
+  if (d.skip) return call('updateContact', { id: d.skip, fields: { step: '', stepAt: '' } });
+  if (d.ping) { const k = kById(d.c); return call('updateContact', { id: k.id, fields: { [d.ping]: k[d.ping] ? '' : D.today } }); }
+  if (d.savecomp) return call('updateCompany', { id: d.savecomp, fields: { name: $('#f-name').value, url: $('#f-url').value, platform: $('#f-platform').value, date: $('#f-date').value, comment: $('#f-comment').value, rejected: $('#f-rej').checked ? (D.cmap[d.savecomp].rejected || D.today) : '' } }).then(ok => ok && toast('Сохранено'));
+  if (d.addcontact) { const v = $('#new-contact').value.trim(); if (v) return call('addContact', { cid: d.addcontact, contact: v }); return; }
+  if (d.delcontact) { if (confirm('Удалить контакт?')) return call('deleteContact', { id: d.delcontact }); return; }
+  if (d.delcomp) { if (confirm('Удалить отклик со всеми контактами?')) { const ok = await call('deleteCompany', { id: d.delcomp }); if (ok) { openId = null; render(); } } return; }
+  if (d.tplcopy) { const k = kById(d.tplcopy); return copy(fill(D.tplMap[document.querySelector('[data-tplsel="' + k.id + '"]').value].text, D.cmap[k.cid], k)); }
+  if (d.tplsend) { const k = kById(d.tplsend); return call('sendTemplate', { id: k.id, code: document.querySelector('[data-tplsel="' + k.id + '"]').value }).then(ok => ok && toast('Отправила в чат с ботом')); }
+  if (el.id === 'a-save') {
+    const name = $('#a-name').value.trim(), url = $('#a-url').value.trim();
+    if (!name && !url) return toast('Укажи компанию или ссылку');
+    const ok = await call('addCompany', { name, url, platform: $('#a-platform').value || platformOf(url), date: $('#a-date').value, comment: $('#a-comment').value, contacts: $('#a-contacts').value.split('\n') });
+    if (ok) { toast('Добавлено'); const last = D.companies[D.companies.length - 1]; openId = last && last.id; render(); }
+    return;
+  }
+  if (d.open) { openId = d.open; window.scrollTo(0, 0); return render(); }
+});
+document.addEventListener('change', e => {
+  const d = e.target.dataset;
+  if (d.stage) return call('updateContact', { id: d.stage, fields: { stage: e.target.value } });
+  if (d.replied) return call('updateContact', { id: d.replied, fields: { replied: e.target.value } });
+  if (d.note) return call('updateContact', { id: d.note, fields: { note: e.target.value } }).then(ok => ok && toast('Заметка сохранена'));
+  if (d.tplsel) { const k = kById(d.tplsel); $('#tplprev-' + k.id).textContent = fill(D.tplMap[e.target.value].text, D.cmap[k.cid], k); }
+});
+document.addEventListener('input', e => { if (e.target.id === 'q') { query = e.target.value; const pos = e.target.selectionStart; render(); const q = $('#q'); q.focus(); q.setSelectionRange(pos, pos); } });
+if (tg) tg.BackButton.onClick(() => { openId = null; render(); });
+
+if (API.includes('APPS_SCRIPT')) $('#app').innerHTML = '<div class="center">Бэкенд ещё не подключён</div>';
+else call('load', {});
+</script>
+</body>
+</html>
